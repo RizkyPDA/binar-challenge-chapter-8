@@ -103,6 +103,21 @@ function AddContent({ show, handleClose, setPlayers }) {
                 }}
               />
             </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Player Level</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Insert Player Lvl"
+                required
+                value={lvl}
+                onChange={(e) => {
+                  setExp(e.target.value);
+                }}
+              />
+            </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
