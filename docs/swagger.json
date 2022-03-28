@@ -1,0 +1,596 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Binar Challenge 8",
+    "description": "API Documentation using Swagger",
+    "termsOfService": "http://rizky.com/terms/",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.rizky.com/support",
+      "email": "support@rizky.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Development Server"
+    },
+    {
+      "url": "http://production.com",
+      "description": "Production Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Players",
+      "description": "End Point Untuk Operasi CRUD Players"
+    }
+  ],
+  "paths": {
+    "/api/v1/players": {
+      "post": {
+        "tags": ["Players"],
+        "summary": "Create A new Player",
+        "operationId": "createPlayer",
+        "requestBody": {
+          "description": "Create A new Player",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Create_User_Body"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create_User_Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "username or email cannot empty / password cannot be empty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Players"],
+        "summary": "Get All Players",
+        "operationId": "getPlayers",
+        "description": "Get All Players From Database",
+        "responses": {
+          "200": {
+            "description": "Successfully get Players",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/{id}": {
+      "get": {
+        "tags": ["Players"],
+        "summary": "Get Players By ID",
+        "operationId": "getPlayerByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of User",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Player with ${id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "put": {
+        "tags": ["Players"],
+        "summary": "Update Player By ID",
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of User",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update Existing Player",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_User_Body"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_User_Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Player with id: ${id} successfully updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Player with ${id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Some Error Message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Players"],
+        "summary": "Delete Players By ID",
+        "operationId": "deletePlayerByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of Player",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully delete Player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "result": "Success",
+                      "example": "Player with id: ${id}, was deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FAILED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Cannot delete Player with id=${id}. Maybe Player was not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Some Error Message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/exp/{id}": {
+      "post": {
+        "tags": ["Players"],
+        "summary": "Update Experience By ID",
+        "operationId": "updateExp",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique ID of Player",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update Existing Exp Player",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_User_Body_Exp"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_User_Body_Exp"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Player with id = ${id} gain ${exp} experience. Total experience = ${player.experience}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Exp field cannot be empty / Cannot update Player with id=${id}!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Player with ${id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Some Error Message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Create_User_Body": {
+        "required": ["username", "email", "password", "experience", "lvl"],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Your Username"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "experience": {
+            "type": "string",
+            "example": "0"
+          },
+          "lvl": {
+            "type": "string",
+            "example": "0"
+          }
+        }
+      },
+      "Update_User_Body": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Your Username"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "experience": {
+            "type": "string",
+            "example": "0"
+          },
+          "lvl": {
+            "type": "string",
+            "example": "0"
+          }
+        }
+      },
+
+      "Update_User_Body_Exp": {
+        "type": "object",
+        "properties": {
+          "experience": {
+            "type": "string",
+            "example": "0"
+          },
+          "lvl": {
+            "type": "string",
+            "example": "0"
+          }
+        }
+      },
+      "Error_Empty_Username": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "0"
+          },
+          "message": {
+            "type": "string",
+            "example": "username or email cannot empty"
+          }
+        }
+      },
+
+      "User": {
+        "required": ["username", "email", "password", "experience", "lvl"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "experience": {
+            "type": "number",
+            "example": 1000
+          },
+          "lvl": {
+            "type": "number",
+            "example": 10
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}
